@@ -31,7 +31,7 @@ function togglePanel() {
 
 async function submitForm(event) {
     event.preventDefault();
-    // let formData = new FormData();
+     let formData = new FormData();
 
     if (registerPage) {
         const newUsername = document.getElementById('newUsername').value;
@@ -58,13 +58,38 @@ async function submitForm(event) {
             return;
         }
 
-        // formData.append('newUsername', newUsername);
-        // formData.append('newPassword', newPassword);
-        // formData.append('repeatPassword', repeatPassword);
-        // formData.append('studentID', studentID);
+         formData.append('newUsername', newUsername);
+         formData.append('newPassword', newPassword);
+         formData.append('repeatPassword', repeatPassword);
+         formData.append('studentID', studentID);
+        
+
+        // TODO : fix these commented codes. then delete every thing between commented line /*---*/
+     	fetch('http://localhost:8080/submit-form', {
+        	 method: 'POST',
+       	  body: formData
+     	})
+         .then(response => {
+             if (response.ok) {
+                 return response.json(); // Parse response body as JSON
+             } else {
+                 throw new Error('Failed to receive response from Go server');
+             }
+         })
+         .then(data => {
+             // Handle the response data
+             console.log(data.message); // Access the message field of the response
+             return null
+             // Perform additional actions based on the response
+             // ...
+         })
+         .catch(error => {
+             console.error('An error occurred while sending form data:', error);
+             return null
+         });
 
         /*--------------------------------------------------------------------------------------*/
-            if (usernames.includes(newUsername)) {
+        /*    if (usernames.includes(newUsername)) {
                 alert('This username has already been taken! Please pick another one.');
                 return;
             }
@@ -74,6 +99,7 @@ async function submitForm(event) {
             }
             allData[newUsername] = [studentID, newPassword]
             usernames.push(newUsername)
+        */
         /*--------------------------------------------------------------------------------------*/
         clearFormFields(registerForm)
 
@@ -94,37 +120,17 @@ async function submitForm(event) {
         // formData.append('password', password);
 
         /*--------------------------------------------------------------------------------------*/
+        /*
             if (!usernames.includes(username) || allData[username][0] !== password) {
                 alert('Username or Password is not correct!')
                 return;
             }
+        */
         /*--------------------------------------------------------------------------------------*/
         window.location.href = '../dashboard/index.html'
         clearFormFields(loginForm)
     }
-    // TODO : fix these commented codes. then delete every thing between commented line /*---*/
-    // fetch('http://localhost:8080/submit-form', {
-    //     method: 'POST',
-    //     body: formData
-    // })
-    //     .then(response => {
-    //         if (response.ok) {
-    //             return response.json(); // Parse response body as JSON
-    //         } else {
-    //             throw new Error('Failed to receive response from Go server');
-    //         }
-    //     })
-    //     .then(data => {
-    //         // Handle the response data
-    //         console.log(data.message); // Access the message field of the response
-    //         return null
-    //         // Perform additional actions based on the response
-    //         // ...
-    //     })
-    //     .catch(error => {
-    //         console.error('An error occurred while sending form data:', error);
-    //         return null
-    //     });
+
 
     /*--------------------------------------------------------------------------------------*/
 

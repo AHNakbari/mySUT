@@ -1,58 +1,62 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"net/http"
 )
+
+type form_submission struct {
+	Username    string `json:"username" form:"username"`
+	Password    string `json:"password" form:"password"`
+	NewUsername string `json:"newUsername" form:"newUsername"`
+	NewPassword string `json:"newPassword" form:"newPassword"`
+	StudentID   string `json:"studentID" form:"studentID"`
+}
+
+func startServer() {
+	router := gin.Default()
+
+	// Define the routes for the API Gateway
+	router.POST("/submit-form", handleFormSubmission)
+	router.Run(":8080")
+}
 
 type Response struct {
 	Message string `json:"message"`
 }
 
 func main() {
-	http.HandleFunc("/submit-form", handleFormSubmission)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	startServer()
 }
 
-func handleFormSubmission(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
+func handleFormSubmission(c *gin.Context) {
+	fmt.Println("req")
+	var r form_submission
+	err := c.BindWith(&r, binding.FormMultipart)
 	if err != nil {
-		http.Error(w, "Failed to parse form data", http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
-	log.Println(r)
-	// Access the form field values
-	username := r.Form.Get("username")
-	password := r.Form.Get("password")
-	newUsername := r.Form.Get("newUsername")
-	newPassword := r.Form.Get("newPassword")
-	repeatPassword := r.Form.Get("repeatPassword")
-	studentID := r.Form.Get("studentID")
-	log.Println(r.Form)
-
-	log.Println(username)
-	log.Println(password)
-	log.Println(newUsername)
-	log.Println(newPassword)
-	log.Println(repeatPassword)
-	log.Println(studentID)
 
 	response := Response{
 		Message: "Form data received by Go server",
 	}
+
 	// Convert response to JSON
-	jsonResponse, err := json.Marshal(response)
+	/*jsonResponse, err := json.Marshal(response)
 	if err != nil {
-		http.Error(w, "Failed to create response", http.StatusInternalServerError)
+		c.JSON(http.StatusInternalServerError, err)
 		return
-	}
+	}*/
 
 	// Set the appropriate headers
-	w.Header().Set("Content-Type", "application/json")
+	c.Header("Content-Type", "application/json")
+	c.Header("Access-Control-Allow-Origin", "*")
 
 	// Write the response content
-	_, err = w.Write(jsonResponse)
+	c.JSON(http.StatusCreated, response)
 	if err != nil {
 		return
 	}
