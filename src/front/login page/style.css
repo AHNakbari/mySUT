@@ -1,0 +1,164 @@
+body {
+    background-color: #b1d1e8;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: absolute;
+    top: 135px;
+    left: 35%;
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #E9F1F7;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+}
+
+.container.flipped {
+    transform: rotateY(-180deg);
+}
+
+.container.flipped #heading {
+    transform: rotateY(180deg);
+}
+
+.container.flipped #registerForm {
+    transform: rotateY(180deg);
+    position: absolute;
+    top: 115px;
+    left: 0;
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #E9F1F7;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.switch {
+    position: absolute;
+    left: 655px;
+    top: 70px;
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+.switch input {
+    appearance: none;
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    background: #336699;
+    outline: none;
+}
+
+.switch input::before,
+.switch input::after {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bolder;
+}
+
+.switch input::before {
+    content: "Register";
+    left: 28px;
+}
+
+.switch input::after {
+    content: "Login";
+    right: 36px;
+}
+
+.switch input:checked {
+    background: #E9F1F7;
+}
+
+.switch label {
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+    bottom: 4px;
+    border-radius: 20px;
+}
+
+.switch input {
+    transition: 0.25s;
+}
+
+.switch input:checked::before {
+    color: #E9F1F7;
+    transition: color 0.5s;
+}
+
+.switch input:checked::after {
+    color: #000;
+    transition: color 0.5s;
+}
+
+.switch input:checked+label {
+    left: 10px;
+    right: 100px;
+    background: #336699;
+    transition: left 0.5s, right 0.4s 0.2s;
+}
+
+.switch input:not(:checked)::before {
+    color: #000;
+    transition: color 0.5s;
+}
+
+.switch input:not(:checked)::after {
+    color: #336699;
+    transition: color 0.5s 0.2s;
+}
+
+.switch input:not(:checked) +label {
+    left: 100px;
+    right: 10px;
+    background: #E9F1F7;
+    transition: left 0.4s 0.2s, right 0.5s;
+}
+
+h1 {
+    text-align: center;
+    color: #336699;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #336699;
+}
+
+input[name="username"],
+input[name="password"],
+input[name="newUsername"],
+input[name="newPassword"],
+input[name="repeatPassword"],
+input[name="studentID"]{
+    width: 95%;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 8px;
+    background-color: #336699;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}

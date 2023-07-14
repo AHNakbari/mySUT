@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Login</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<span class="switch" onclick="togglePanel()">
+    <input type="checkbox" id="switcher">
+    <label for="switcher"></label>
+</span>
+<div class="container">
+    <h1 id="heading">User Login</h1>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit" onclick="submitForm(event)">Login</button>
+    </form>
+    <form id="registerForm" class="flipped" style="display: none">
+        <label for="newUsername">New Username:</label>
+        <input type="text" id="newUsername" name="newUsername" required>
+
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+
+        <label for="repeatPassword">Repeat Password:</label>
+        <input type="password" id="repeatPassword" name="repeatPassword" required>
+
+        <label for="studentID">Student ID:</label>
+        <input type="text" id="studentID" name="studentID" required>
+
+        <button type="submit" onclick="submitForm(event)">Register</button>
+    </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

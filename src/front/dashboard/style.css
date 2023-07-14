@@ -1,0 +1,144 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('../../../../public/images/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard {
+    background-color: #00000000;
+    height: 100vh;
+    margin: 0 10px 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.header {
+    background-color: #33669999;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+}
+
+.header h1 {
+    margin: 0 0 0 600px;
+    color: #99ccffAA;
+    -webkit-text-stroke: 1px black;
+}
+
+.blue-box {
+    position: relative;
+    bottom: 0;
+    left: -19px;
+    width: 200px;
+    height: 25px;
+    background-color: rgba(51, 102, 153, 0.65);
+    color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    transition: height 0.3s;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.blue-box h1 {
+    cursor: pointer;
+    margin: -3px 0 0 26%;
+    color: #6699ff;
+    font-size: 25px;
+    -webkit-text-stroke: 1px black;
+}
+
+.Groups, .Courses {
+    margin-top: 10px;
+    display: none;
+}
+
+.blue-box.expanded {
+    height: 220px;
+}
+
+.blue-box.expanded .Groups,
+.blue-box.expanded .Courses {
+    display: block;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.profile-name {
+    font-weight: bold;
+}
+
+.profile-change-button {
+    background-color: #fff;
+    border: none;
+    color: #336699;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.content {
+    padding: 20px;
+}
+
+.admin-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-icon {
+    color: #336699;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.role-section {
+    display: flex;
+    align-items: center;
+}
+
+.role-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.role-request-icon {
+    color: #336699;
+    cursor: pointer;
+}
+
+.user-section h2 {
+    margin-bottom: 10px;
+}
+
+.news-box {
+    background-color: #f2f5fa;
+    padding: 10px;
+    border-radius: 5px;
+}
