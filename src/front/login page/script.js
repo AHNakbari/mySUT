@@ -31,7 +31,7 @@ function togglePanel() {
 
 async function submitForm(event) {
     event.preventDefault();
-    let formData = new FormData();
+    // let formData = new FormData();
 
     if (registerPage) {
         const newUsername = document.getElementById('newUsername').value;
@@ -58,10 +58,10 @@ async function submitForm(event) {
             return;
         }
 
-        formData.append('newUsername', newUsername);
-        formData.append('newPassword', newPassword);
-        formData.append('repeatPassword', repeatPassword);
-        formData.append('studentID', studentID);
+        // formData.append('newUsername', newUsername);
+        // formData.append('newPassword', newPassword);
+        // formData.append('repeatPassword', repeatPassword);
+        // formData.append('studentID', studentID);
 
         /*--------------------------------------------------------------------------------------*/
             if (usernames.includes(newUsername)) {

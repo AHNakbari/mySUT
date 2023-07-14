@@ -1,3 +1,10 @@
+const role = "Admin";
+const roleTextElement = document.getElementById("roleText");
+roleTextElement.textContent = role;
+
+const profileName = "Amirhossein";
+const profileNameText = document.getElementById("profile-name-text")
+profileNameText.textContent = profileName;
 
 function createGroup() {
     // Code to handle creating a group (only for admin)

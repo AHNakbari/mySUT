@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url('../../../../public/images/background.jpg');
+    background-image: url('../../../public/images/background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -20,11 +20,12 @@ body {
 
 
 .header {
-    background-color: #33669999;
+    background: linear-gradient(45deg, #00FFFF70, #6600FF70);
     color: #fff;
     padding: 20px;
     display: flex;
     align-items: center;
+    box-shadow: 0 0 20px #00FFFF, 0 0 25px #6600FF;
     justify-content: space-between;
     border-radius: 8px;
 }
@@ -41,13 +42,29 @@ body {
     left: -19px;
     width: 200px;
     height: 25px;
-    background-color: rgba(51, 102, 153, 0.65);
+    background: linear-gradient(45deg, #00FFFF70, #6600FF70);
     color: #FFFFFF;
     padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 0 20px #00FFFF, 0 0 25px #6600FF;
     transition: height 0.3s;
     overflow: hidden;
-    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.blue-box:nth-child(1) {
+    position: absolute;
+    top: 98px;
+    left: 1207px;
+    width: 280px;
+}
+
+.blue-box:nth-child(1) h1 {
+    cursor: pointer;
+    margin: -3px 0 0 39%;
+    color: #6699ff;
+    font-size: 25px;
+    -webkit-text-stroke: 1px black;
 }
 
 .blue-box h1 {
@@ -58,30 +75,62 @@ body {
     -webkit-text-stroke: 1px black;
 }
 
-.Groups, .Courses {
+.Groups, .Courses, .News {
     margin-top: 10px;
     display: none;
 }
 
 .blue-box.expanded {
-    height: 220px;
+    height: 213px;
+}
+
+.blue-box:nth-child(1).expanded {
+    height: 560px;
 }
 
 .blue-box.expanded .Groups,
-.blue-box.expanded .Courses {
+.blue-box.expanded .Courses,
+.blue-box.expanded .News{
     display: block;
 }
 
-.profile-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.role {
+    font-size: 18px;
+    color: #7ea2e8;
+    position: relative;
+    top: -12px;
+    margin-left: 25px;
+    margin-right: 20px;
 }
 
-.profile-image {
+#roleText {
+    color: plum;
+}
+
+.blue-box:nth-child(5) {
+    position: absolute;
+    top: 99px;
+    left: 275px;
+    width: 868px;
+    height: 560px;
+    background: rgba(51, 102, 153, 0.35);
+    box-shadow: 0 0 0 #0000, 0 0 25px #6600FF90;
+}
+
+.profile-section {
+    position: absolute;
+    left: 55px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.profile-icon {
+    cursor: pointer;
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    opacity: 0.8;
 }
 
 .profile-name {
@@ -115,21 +164,6 @@ body {
 .admin-icon {
     color: #336699;
     font-size: 24px;
-    cursor: pointer;
-}
-
-.role-section {
-    display: flex;
-    align-items: center;
-}
-
-.role-name {
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.role-request-icon {
-    color: #336699;
     cursor: pointer;
 }
 

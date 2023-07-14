@@ -11,27 +11,37 @@
     <div class="header">
         <h1>User Dashboard</h1>
         <div class="profile-section">
-            <img src="profile.jpg" alt="Profile Image" class="profile-image">
-            <span class="profile-name">John Doe</span>
-            <button class="profile-change-button" onclick="changeProfile()">Change Profile</button>
+            <img src="./../../../public/images/profileIcon.png" alt="Profile Icon" class="profile-icon">
+            <span class="profile-name" id="profile-name-text"></span>
         </div>
     </div>
     <div class="content">
-        <div class="role-box">
-            <div class="role">
-                Your Role is
+        <div class="blue-box" onclick="expandBox(1)">
+            <h1>News</h1>
+            <div class="News">
+                hamid Tala
             </div>
         </div>
-        <div class="blue-box" onclick="expandBox(1)">
+        <div class="blue-box">
+            <div class="role">
+                <p>Your role is <strong><span id="roleText"></span></strong></p>
+            </div>
+        </div>
+        <div class="blue-box" onclick="expandBox(3)">
             <h1>Groups</h1>
             <div class="Groups">
                 heeeeey
             </div>
         </div>
-        <div class="blue-box" onclick="expandBox(2)">
+        <div class="blue-box" onclick="expandBox(4)">
             <h1>Courses</h1>
             <div class="Courses">
                 dododododo
+            </div>
+        </div>
+        <div class="blue-box">
+            <div class="allContent">
+                vizh vizh vizh
             </div>
         </div>
     </div>
