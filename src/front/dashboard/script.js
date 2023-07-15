@@ -6,6 +6,18 @@ const profileName = "Amirhossein";
 const profileNameText = document.getElementById("profile-name-text")
 profileNameText.textContent = profileName;
 
+const usernameDefault = "Amirhossein"
+const usernameDefaultText = document.getElementById("username")
+usernameDefaultText.value = usernameDefault
+
+const studentIDDefault = "400104737"
+const studentIDDefaultText = document.getElementById("studentID")
+studentIDDefaultText.value = studentIDDefault
+
+let showProfile = false;
+const profileForm = document.getElementById("profile-form");
+
+
 function createGroup() {
     // Code to handle creating a group (only for admin)
 }
@@ -19,7 +31,13 @@ function createCourseRequest() {
 }
 
 function changeProfile() {
-    // Code to handle changing the profile
+    showProfile = !showProfile;
+    if (showProfile) {
+        profileForm.style.display = 'block'
+    } else {
+        profileForm.style.display = 'none'
+    }
+    clearFormFields(profileForm)
 }
 
 function requestRole() {
@@ -29,4 +47,11 @@ function requestRole() {
 function expandBox(boxNumber) {
     const box = document.querySelectorAll('.blue-box')[boxNumber - 1];
     box.classList.toggle('expanded');
+}
+
+function clearFormFields(form) {
+    const inputs = form.querySelectorAll('input[type="text"], input[type="password"]');
+    inputs.forEach((input) => {
+        input.value = '';
+    });
 }

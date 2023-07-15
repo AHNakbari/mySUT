@@ -11,7 +11,7 @@
     <div class="header">
         <h1>User Dashboard</h1>
         <div class="profile-section">
-            <img src="./../../../public/images/profileIcon.png" alt="Profile Icon" class="profile-icon">
+            <img src="./../../../public/images/profileIcon.png" alt="Profile Icon" class="profile-icon" onclick="changeProfile()">
             <span class="profile-name" id="profile-name-text"></span>
         </div>
     </div>
@@ -41,7 +41,52 @@
         </div>
         <div class="blue-box">
             <div class="allContent">
-                vizh vizh vizh
+                <div class="container">
+                    <form id="profile-form" style="display:none;">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" disabled>
+
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+
+                        <label for="newPassword">New Password:</label>
+                        <input type="password" id="newPassword" name="newPassword">
+
+                        <label for="repeatPassword">Repeat Password:</label>
+                        <input type="password" id="repeatPassword" name="repeatPassword">
+
+                        <label for="studentID">Student ID:</label>
+                        <input type="text" id="studentID" name="studentID" disabled>
+
+                        <div>
+                            <label>
+                                Entering Year:
+                                <select class="select-button">
+                                    <option value="option1">1401</option>
+                                    <option value="option2">1400</option>
+                                    <option value="option3">1399</option>
+                                    <option value="option3">1398</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label>
+                                Field: &nbsp
+                                <select class="select-button">
+                                    <option value="option1">Computer Engineering</option>
+                                    <option value="option2">Electrical Engineering</option>
+                                    <option value="option3">Aerospace Engineering</option>
+                                    <option value="option3">Petroleum Engineering</option>
+                                    <option value="option3">Civil Engineering</option>
+                                    <option value="option3">chemical Engineering</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <button type="submit" onclick="submitForm(event)">Save</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
