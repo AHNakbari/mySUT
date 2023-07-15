@@ -42,7 +42,7 @@ CREATE TABLE courses (
 );
 
 
--- INSERT INTO users (user_id, name, password, reshte, vorudi, courses, groups, role)
--- VALUES
---   ('John1', 'Doe', "password", 3123123, 'ce', '1400', ARRAY['math', 'algebra'], ARRAY['groupA', 'groupB'],  1);
+INSERT INTO users (user_id, name, number, password, reshte, vorudi, courses, groups, role)
+VALUES
+  ('Amir', 'Amirhossein Akbari', 400104737, 'pass', 'Computer Engineering', '1400', ARRAY['WebDevelopment', 'LinearAlgebra'], ARRAY['groupA', 'groupB'],  0);
 
