@@ -1,0 +1,117 @@
+
+syntax = "proto3";
+
+package biz.v1;
+
+option go_package = "gen/v1";
+
+service DatabaseService {
+  
+  rpc GetUser(UserRequest) returns (UserResponse);
+  rpc SendUser(UserResponse) returns (UserRequest);
+  rpc DeleteUser(UserRequest) returns (DeleteResponse);
+
+
+  rpc GetGroup(GroupRequest) returns (GroupResponse);
+  rpc SendGroup(GroupResponse) returns (GroupRequest);
+  rpc DeleteGroup(GroupRequest) returns (DeleteResponse);
+
+  rpc GetSubgroup(SubRequest) returns (SubResponse);
+  rpc SendSubgroup(SubResponse) returns (SubRequest);
+  rpc DeleteSubgroup(SubRequest) returns (DeleteResponse);
+
+
+
+
+  // rpc GetSubgroup(SubgroupRequest) returns (SubgroupResponse);
+  // rpc SendSubgroup(SubgroupResponse) returns (SubgroupRequest);
+  // rpc DeleteSubgroup(SubgroupRequest) returns (DeleteResponse);
+  
+
+
+  rpc GetCourse(CourseRequest) returns (CourseResponse);
+  rpc SendCourse(CourseResponse) returns (CourseRequest);
+  rpc DeleteCourse(CourseRequest) returns (DeleteResponse);
+
+
+  rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
+
+}
+
+message GetAllUsersRequest{
+
+}
+
+message GetAllUsersResponse{
+  repeated string user_ids = 1;
+}
+
+message UserRequest {
+  string user_id = 1;
+}
+message UserResponse {
+  User user = 1;
+}
+message User {
+  string user_id = 1;
+  string name = 2;
+  int32 number = 3;
+  string password = 4;
+  string reshte = 5;
+  string vorudi = 6;
+  repeated string courses = 7;
+  repeated string groups = 8;
+  int32 role = 9;
+}
+
+
+
+message GroupRequest {
+  string name = 1;
+}
+message GroupResponse {
+  Group group = 1;
+}
+message Group {
+  string name = 1;
+  repeated string subgroups = 2;
+  repeated string courses = 3;
+  repeated string members = 4;
+  string owner = 5;
+  repeated string news = 6;
+}
+
+
+
+message SubRequest {
+  string name = 1;
+}
+message SubResponse {
+  Sub sub = 1;
+}
+message Sub {
+  string name = 1;
+  repeated string members = 2;
+  repeated string courses = 3;
+  string owner = 4;
+}
+
+
+
+message CourseRequest {
+  string name = 1;
+}
+message CourseResponse {
+  Course course = 1;
+}
+message Course {
+  string name = 1;
+  repeated string exercises = 2;
+  repeated string members = 3;
+  string owner = 4;
+
+}
+
+message DeleteResponse {
+  int32 isTrue = 1;
+}
