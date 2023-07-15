@@ -65,7 +65,7 @@ async function submitForm(event) {
         
 
         // TODO : fix these commented codes. then delete every thing between commented line /*---*/
-     	fetch('http://localhost:8080/submit-form', {
+     	fetch('http://localhost:8080/create-user', {
         	 method: 'POST',
        	  body: formData
      	})
