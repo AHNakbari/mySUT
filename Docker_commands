@@ -1,9 +1,11 @@
 Biz:
 # cd to biz directory and run these command:
 docker build -t my-biz .
-docker run -it --network=host --name my-bizc --restart=on-failure  my-biz 
+docker run -it --network=host --name my-bizc my-biz 
+
+
 
 Postgres:
 # cd to custom_postgres directory and run these command:
 docker build -t my-post .
-docker run -it --network=host --name my-postc --restart=always  my-post
+docker run -it --network=host --name my-postc  my-post
