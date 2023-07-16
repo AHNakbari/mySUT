@@ -32,17 +32,18 @@
                 <img src="./../../../public/images/plus.png" alt="add group" class="plus-icon" onclick="addToGroup()">
             </h1>
             <div class="Groups">
+                <ul id="userGroupList"></ul>
             </div>
         </div>
         <div class="blue-box" onclick="expandBox(4)">
             <h1>Courses</h1>
             <div class="Courses">
-                dododododo
+                <ul id="userCourseList"></ul>
             </div>
         </div>
         <div class="blue-box">
             <div class="allContent">
-                <div class="container">
+                <div class="container" id="center-box">
                     <form id="profile-form" style="display:none;">
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="username" disabled>
@@ -86,6 +87,18 @@
                         </div>
 
                         <button type="submit" onclick="submitForm(event)">Save</button>
+                    </form>
+                    <form id="guest-group">
+                        <ul id="all-groups-list" class="all-group-list"></ul>
+                    </form>
+                    <form id="create-group" class="create-group" style="display: none">
+                        <label for="username">Group name:</label>
+                        <input type="text" id="group" name="username" required>
+
+                        <label for="password">Owner username:</label>
+                        <input type="text" id="owner" name="password" required>
+
+                        <button type="submit" onclick="createGroups(event)">Create</button>
                     </form>
                 </div>
             </div>

@@ -269,3 +269,12 @@ button[type="submit"] {
     border-radius: 3px;
     cursor: pointer;
 }
+
+.all-group-list {
+    font-size: 35px;
+}
+
+.create-group {
+    position: relative;
+    left: 675px;
+}

@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"google.golang.org/grpc"
 	"log"
-	pb "mysut/pb"
+	pb "mysut/server/pb"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -24,9 +24,8 @@ type form_submission struct {
 	StudentID   string `json:"studentID" form:"studentID"`
 }
 type groupReq struct {
-	Name string `json:"name" form:"name"`
+	Name  string `json:"name" form:"name"`
 	Owner string `json:"owner" form:"owner"`
-
 }
 
 func startServer() {
@@ -50,6 +49,7 @@ func startServer() {
 	router.POST("/get-courses", handleGetCourses)
 	router.POST("/get-group", handleGetGroup)
 	router.POST("/get-course", handleGetCourse)
+	router.POST("/create-group", handleCreateGroup)
 	router.Run(":8080")
 }
 
@@ -193,6 +193,7 @@ func handleGetUser(c *gin.Context) {
 	}
 }
 func handleGetGroups(c *gin.Context) {
+	fmt.Println("DFSDFSDSDF")
 	// Set the appropriate headers
 	c.Header("Content-Type", "application/json")
 	c.Header("Access-Control-Allow-Origin", "*")
@@ -205,7 +206,9 @@ func handleGetGroups(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println(replyMsg)
 	response = Response{Groups: replyMsg.Names}
+	fmt.Println(replyMsg.Names)
 	c.JSON(http.StatusOK, response)
 	if err != nil {
 		return
@@ -310,9 +313,10 @@ func handleCreateGroup(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-	_, err = c2.SendGroup(ctx,&pb.GroupResponse{Group: &pb.Group{Name: r.Name,Owner: r.Owner}})
+	_, err = c2.SendGroup(ctx, &pb.GroupResponse{Group: &pb.Group{Name: r.Name, Owner: r.Owner}})
+	fmt.Println(r.Name, r.Owner)
 	if err != nil {
-		return 
+		return
 	}
 	c.JSON(http.StatusOK, response)
 	if err != nil {
@@ -326,4 +330,3 @@ func passwordCheck(pass string) bool {
 func usernameCheck(username string) bool {
 	return regexp.MustCompile(`^[a-zA-Z0-9_.-]*$`).MatchString(username)
 }
-
