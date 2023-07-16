@@ -155,11 +155,11 @@ input[name="studentID"]{
 }
 
 .blue-box.expanded {
-    height: 325px;
+    height: 335px;
 }
 
 .blue-box:nth-child(1).expanded {
-    height: 785px;
+    height: 805px;
 }
 
 .blue-box.expanded .Groups,
@@ -186,7 +186,7 @@ input[name="studentID"]{
     top: 99px;
     left: 275px;
     width: 1080px;
-    height: 785px;
+    height: 805px;
     background: rgba(51, 102, 153, 0.35);
     box-shadow: 0 0 0 #0000, 0 0 25px #6600FF90;
 }
@@ -205,6 +205,15 @@ input[name="studentID"]{
     height: 40px;
     border-radius: 50%;
     opacity: 0.8;
+}
+
+.plus-icon {
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    left: 280px;
+    border-radius: 50%;
+    opacity: 1;
 }
 
 .profile-name {
