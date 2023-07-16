@@ -3,10 +3,7 @@ const container = document.querySelector('.container');
 const registerForm = document.getElementById('registerForm');
 const loginForm = document.getElementById('loginForm');
 const heading = document.getElementById('heading');
-/*--------------------------------------------------------------------------------------*/
-const allData = {}
-const usernames = []
-/*--------------------------------------------------------------------------------------*/
+
 
 let registerPage = false;
 
@@ -58,49 +55,35 @@ async function submitForm(event) {
             return;
         }
 
+        if (newPassword !== repeatPassword) {
+            alert('Please enter same password for both password input')
+            return
+        }
+
          formData.append('newUsername', newUsername);
          formData.append('newPassword', newPassword);
          formData.append('repeatPassword', repeatPassword);
          formData.append('studentID', studentID);
-        
 
-        // TODO : fix these commented codes. then delete every thing between commented line /*---*/
-     	fetch('http://localhost:8080/create-user', {
-        	 method: 'POST',
-       	  body: formData
-     	})
-         .then(response => {
-             if (response.ok) {
-                 return response.json(); // Parse response body as JSON
-             } else {
-                 throw new Error('Failed to receive response from Go server');
-             }
-         })
-         .then(data => {
-             // Handle the response data
-             console.log(data.message); // Access the message field of the response
-             return null
-             // Perform additional actions based on the response
-             // ...
-         })
-         .catch(error => {
-             console.error('An error occurred while sending form data:', error);
-             return null
-         });
+        fetch('http://localhost:8080/create-user', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (response != null) {
+                    return response.json(); // Extract the response body as JSON
+                } else {
+                    throw new Error('Failed to receive response from Go server');
+                }
+            })
+            .then(data => {
+                const message = data.message; // Extract the message text from the response JSON
+                alert(message); // Display the message text in an alert dialog
+            })
+            .catch(error => {
+                console.error('An error occurred while sending form data:', error);
+            });
 
-        /*--------------------------------------------------------------------------------------*/
-        /*    if (usernames.includes(newUsername)) {
-                alert('This username has already been taken! Please pick another one.');
-                return;
-            }
-            if (newPassword !== repeatPassword) {
-                alert('Two password fields are not the same.');
-                return;
-            }
-            allData[newUsername] = [studentID, newPassword]
-            usernames.push(newUsername)
-        */
-        /*--------------------------------------------------------------------------------------*/
         clearFormFields(registerForm)
 
     } else {
@@ -116,25 +99,34 @@ async function submitForm(event) {
             return;
         }
 
-        // formData.append('username', username);
-        // formData.append('password', password);
+        formData.append('username', username);
+        formData.append('password', password);
 
-        /*--------------------------------------------------------------------------------------*/
-        /*
-            if (!usernames.includes(username) || allData[username][0] !== password) {
-                alert('Username or Password is not correct!')
-                return;
-            }
-        */
-        /*--------------------------------------------------------------------------------------*/
-        window.location.href = '../dashboard/index.html'
-        clearFormFields(loginForm)
+        fetch('http://localhost:8080/login', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (response != null) {
+                    return response.json(); // Extract the response body as JSON
+                } else {
+                    throw new Error('Failed to receive response from Go server');
+                }
+            })
+            .then(data => {
+                const message = data.message; // Extract the message text from the response JSON
+                if (message !== 'login successful') {
+                    alert(message)
+                } else {
+                    window.location.href = '../dashboard/index.html'
+                    localStorage["data"] = data.username;
+                    clearFormFields(loginForm);
+                }
+            })
+            .catch(error => {
+                console.error('An error occurred while sending form data:', error);
+            });
     }
-
-
-    /*--------------------------------------------------------------------------------------*/
-
-    /*--------------------------------------------------------------------------------------*/
 }
 
 function clearFormFields(form) {

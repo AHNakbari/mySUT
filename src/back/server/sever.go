@@ -1,12 +1,12 @@
 package main
 
 import (
+	pb ""
 	"context"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"google.golang.org/grpc"
 	"log"
-	pb "mysut/pb"
 	"net/http"
 	"regexp"
 	"strconv"
