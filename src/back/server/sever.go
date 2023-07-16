@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"google.golang.org/grpc"
 	"log"
-	pb "mysut/server/pb"
+	pb "mysut/pb"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -22,6 +22,9 @@ type form_submission struct {
 	NewUsername string `json:"newUsername" form:"newUsername"`
 	NewPassword string `json:"newPassword" form:"newPassword"`
 	StudentID   string `json:"studentID" form:"studentID"`
+}
+type groupReq struct {
+	Name string `json:"name" form:"name"`
 }
 
 func startServer() {
@@ -41,6 +44,8 @@ func startServer() {
 	router.POST("/create-user", handleCreateUser)
 	router.POST("/login", handleLogin)
 	router.POST("/get-user", handleGetUser)
+	router.POST("/get-groups", handleGetGroups)
+	router.POST("/get-group", handleGetGroup)
 	router.Run(":8080")
 }
 
@@ -53,6 +58,9 @@ type Response struct {
 	Courses   []string `json:"courses"`
 	Field     string   `json:"field"`
 	Year      string   `json:"year"`
+	Name      string   `json:"name"`
+	Members   []string `json:"members"`
+	News      []string `json:"news"`
 }
 
 func main() {
@@ -176,6 +184,52 @@ func handleGetUser(c *gin.Context) {
 	response = Response{Message: "login successful", Username: replyMsg.User.UserId, Role: replyMsg.User.Role, Groups: replyMsg.User.Groups,
 		Courses: replyMsg.User.Courses, Field: replyMsg.User.Reshte, Year: replyMsg.User.Vorudi, StudentID: replyMsg.User.Number}
 	c.JSON(http.StatusAccepted, response)
+	if err != nil {
+		return
+	}
+}
+func handleGetGroups(c *gin.Context) {
+	// Set the appropriate headers
+	c.Header("Content-Type", "application/json")
+	c.Header("Access-Control-Allow-Origin", "*")
+	response := Response{
+		Message: "Form data received by Go server",
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	replyMsg, err := c2.GetAllGroups(ctx, &pb.GetAllGroupsRequest{})
+	if err != nil {
+		fmt.Println(err)
+	}
+	response = Response{Groups: replyMsg.Names}
+	c.JSON(http.StatusOK, response)
+	if err != nil {
+		return
+	}
+}
+func handleGetGroup(c *gin.Context) {
+	// Set the appropriate headers
+	c.Header("Content-Type", "application/json")
+	c.Header("Access-Control-Allow-Origin", "*")
+
+	var r groupReq
+	err := c.ShouldBindWith(&r, binding.FormMultipart)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+	response := Response{
+		Message: "Form data received by Go server",
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	replyMsg, err := c2.GetGroup(ctx, &pb.GroupRequest{Name: r.Name})
+	if err != nil {
+		fmt.Println(err)
+	}
+	response = Response{Courses: replyMsg.Group.Courses, Name: replyMsg.Group.Name, Username: replyMsg.Group.Owner,
+		Groups: replyMsg.Group.Subgroups, Members: replyMsg.Group.Members, News: replyMsg.Group.News}
+	c.JSON(http.StatusOK, response)
 	if err != nil {
 		return
 	}
