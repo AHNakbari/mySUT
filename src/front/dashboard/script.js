@@ -26,9 +26,9 @@ function addToGroup() {
                 throw new Error('Failed to receive response from Go server');
             }
         })
-        .then(_ => {
+        .then(data => {
             if (userData.role === 0) {
-
+                
             } else {
 
             }
