@@ -35,6 +35,8 @@ type DatabaseServiceClient interface {
 	SendCourse(ctx context.Context, in *CourseResponse, opts ...grpc.CallOption) (*CourseRequest, error)
 	DeleteCourse(ctx context.Context, in *CourseRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	GetAllUsers(ctx context.Context, in *GetAllUsersRequest, opts ...grpc.CallOption) (*GetAllUsersResponse, error)
+	GetAllGroups(ctx context.Context, in *GetAllGroupsRequest, opts ...grpc.CallOption) (*GetAllGroupsResponse, error)
+	GetAllCourses(ctx context.Context, in *GetAllCoursesRequest, opts ...grpc.CallOption) (*GetAllCoursesResponse, error)
 }
 
 type databaseServiceClient struct {
@@ -162,6 +164,24 @@ func (c *databaseServiceClient) GetAllUsers(ctx context.Context, in *GetAllUsers
 	return out, nil
 }
 
+func (c *databaseServiceClient) GetAllGroups(ctx context.Context, in *GetAllGroupsRequest, opts ...grpc.CallOption) (*GetAllGroupsResponse, error) {
+	out := new(GetAllGroupsResponse)
+	err := c.cc.Invoke(ctx, "/biz.v1.DatabaseService/GetAllGroups", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *databaseServiceClient) GetAllCourses(ctx context.Context, in *GetAllCoursesRequest, opts ...grpc.CallOption) (*GetAllCoursesResponse, error) {
+	out := new(GetAllCoursesResponse)
+	err := c.cc.Invoke(ctx, "/biz.v1.DatabaseService/GetAllCourses", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DatabaseServiceServer is the server API for DatabaseService service.
 // All implementations must embed UnimplementedDatabaseServiceServer
 // for forward compatibility
@@ -179,6 +199,8 @@ type DatabaseServiceServer interface {
 	SendCourse(context.Context, *CourseResponse) (*CourseRequest, error)
 	DeleteCourse(context.Context, *CourseRequest) (*DeleteResponse, error)
 	GetAllUsers(context.Context, *GetAllUsersRequest) (*GetAllUsersResponse, error)
+	GetAllGroups(context.Context, *GetAllGroupsRequest) (*GetAllGroupsResponse, error)
+	GetAllCourses(context.Context, *GetAllCoursesRequest) (*GetAllCoursesResponse, error)
 	mustEmbedUnimplementedDatabaseServiceServer()
 }
 
@@ -224,6 +246,12 @@ func (UnimplementedDatabaseServiceServer) DeleteCourse(context.Context, *CourseR
 }
 func (UnimplementedDatabaseServiceServer) GetAllUsers(context.Context, *GetAllUsersRequest) (*GetAllUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllUsers not implemented")
+}
+func (UnimplementedDatabaseServiceServer) GetAllGroups(context.Context, *GetAllGroupsRequest) (*GetAllGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllGroups not implemented")
+}
+func (UnimplementedDatabaseServiceServer) GetAllCourses(context.Context, *GetAllCoursesRequest) (*GetAllCoursesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllCourses not implemented")
 }
 func (UnimplementedDatabaseServiceServer) mustEmbedUnimplementedDatabaseServiceServer() {}
 
@@ -472,6 +500,42 @@ func _DatabaseService_GetAllUsers_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DatabaseService_GetAllGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatabaseServiceServer).GetAllGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/biz.v1.DatabaseService/GetAllGroups",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatabaseServiceServer).GetAllGroups(ctx, req.(*GetAllGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DatabaseService_GetAllCourses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllCoursesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatabaseServiceServer).GetAllCourses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/biz.v1.DatabaseService/GetAllCourses",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatabaseServiceServer).GetAllCourses(ctx, req.(*GetAllCoursesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DatabaseService_ServiceDesc is the grpc.ServiceDesc for DatabaseService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -530,6 +594,14 @@ var DatabaseService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllUsers",
 			Handler:    _DatabaseService_GetAllUsers_Handler,
+		},
+		{
+			MethodName: "GetAllGroups",
+			Handler:    _DatabaseService_GetAllGroups_Handler,
+		},
+		{
+			MethodName: "GetAllCourses",
+			Handler:    _DatabaseService_GetAllCourses_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
