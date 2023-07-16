@@ -35,7 +35,7 @@ service DatabaseService {
 
 
   rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
-
+  rpc GetAllGroups(GetAllGroupsRequest) returns (GetAllGroupsResponse);
 }
 
 message GetAllUsersRequest{
@@ -45,6 +45,23 @@ message GetAllUsersRequest{
 message GetAllUsersResponse{
   repeated string user_ids = 1;
 }
+
+
+message GetAllGroupsRequest{
+
+}
+
+message GetAllGroupsResponse{
+  repeated string names = 1;
+}
+
+
+
+
+
+
+
+
 
 message UserRequest {
   string user_id = 1;
