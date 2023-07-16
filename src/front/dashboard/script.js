@@ -1,32 +1,41 @@
-const role = "Admin";
-const roleTextElement = document.getElementById("roleText");
+let roleTextElement = document.getElementById("roleText");
 const usernameID = localStorage["data"];
-roleTextElement.textContent = role;
-let userData = {
-    "username": "",
-    "role": "",
-    "groups": [],
-    "courses": [],
-    "field": "",
-    "year": ""
-};
+let userData = {}
 
-let profileNameText = document.getElementById("profile-name-text")
+const profileNameText = document.getElementById("profile-name-text")
 
-const usernameDefault = "Amirhossein"
 const usernameDefaultText = document.getElementById("username")
-usernameDefaultText.value = usernameDefault
 
-const studentIDDefault = "400104737"
 const studentIDDefaultText = document.getElementById("studentID")
-studentIDDefaultText.value = studentIDDefault
 
 let showProfile = false;
 const profileForm = document.getElementById("profile-form");
 
 
-function createGroup() {
-    // Code to handle creating a group (only for admin)
+function addToGroup() {
+    let formData = new FormData()
+    formData.append(userData.role)
+    fetch('http://localhost:8080/add-groups', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (response != null) {
+                return response.json(); // Extract the response body as JSON
+            } else {
+                throw new Error('Failed to receive response from Go server');
+            }
+        })
+        .then(_ => {
+            if (userData.role === 0) {
+
+            } else {
+
+            }
+        })
+        .catch(_ =>{
+            alert('An error occurred while sending form data:');
+        });
 }
 
 function createCourse() {
@@ -83,18 +92,26 @@ function initializePage() {
             }
         })
         .then(data => {
-            userData.role = data.role;
-            // part 1
-            userData.username = data.username;
-            userData.year = data.year;
-            userData.field = data.field;
-            userData.courses = data.courses;
-            userData.groups = data.groups;
+            userData = data;
+            profileNameText.textContent = userData.username;
+            usernameDefaultText.placeholder = userData.username;
+            studentIDDefaultText.placeholder = userData.number;
+            switch (userData.role) {
+                case 0:
+                    roleTextElement.textContent = "Admin";
+                    break;
+                case 1:
+                    roleTextElement.textContent = "G.O";
+                    break;
+                case 2:
+                    roleTextElement.textContent = "S.G.O";
+                    break;
+                default:
+                    roleTextElement.textContent = "Guest";
+                    break
+            }
         })
-        .catch(error => {
+        .catch(_ => {
             alert('An error occurred while sending form data:');
         });
-    // part 2
-    alert(userData.role)
-    profileNameText.textContent = userData.username;
 }
