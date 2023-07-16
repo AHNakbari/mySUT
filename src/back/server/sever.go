@@ -50,6 +50,7 @@ func startServer() {
 	router.POST("/get-group", handleGetGroup)
 	router.POST("/get-course", handleGetCourse)
 	router.POST("/create-group", handleCreateGroup)
+	router.POST("/add-to-group", handleAddToGroup)
 	router.Run(":8080")
 }
 
@@ -314,10 +315,60 @@ func handleCreateGroup(c *gin.Context) {
 		return
 	}
 	_, err = c2.SendGroup(ctx, &pb.GroupResponse{Group: &pb.Group{Name: r.Name, Owner: r.Owner}})
-	fmt.Println(r.Name, r.Owner)
+
 	if err != nil {
 		return
 	}
+	c.JSON(http.StatusOK, response)
+	if err != nil {
+		return
+	}
+}
+
+func handleAddToGroup(c *gin.Context) {
+	// Set the appropriate headers
+	c.Header("Content-Type", "application/json")
+	c.Header("Access-Control-Allow-Origin", "*")
+	var r groupReq
+	err := c.ShouldBindWith(&r, binding.FormMultipart)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+	response := Response{
+		Message: "Form data received by Go server",
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	replyMsg, err := c2.GetGroup(ctx, &pb.GroupRequest{Name: r.Name})
+	if err != nil {
+		fmt.Println(err)
+	}
+	if replyMsg == nil {
+		response = Response{Message: "no group with this name"}
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	grp := replyMsg.Group
+
+	replyMsg2, err := c2.GetUser(ctx, &pb.UserRequest{
+		UserId: r.Owner,
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	usr := replyMsg2.User
+	usr.Groups = append(usr.Groups, grp.Name)
+	grp.Members = append(grp.Members, usr.UserId)
+
+	_, err = c2.SendGroup(ctx, &pb.GroupResponse{Group: &pb.Group{Name: grp.Name, Owner: grp.Owner, Members: grp.Members}})
+	if err != nil {
+		return
+	}
+	_, err = c2.SendUser(ctx, &pb.UserResponse{
+		User: &pb.User{UserId: usr.UserId, Password: usr.Password, Number: usr.Number, Role: usr.Role, Groups: usr.Groups},
+	})
 	c.JSON(http.StatusOK, response)
 	if err != nil {
 		return
