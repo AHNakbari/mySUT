@@ -537,7 +537,7 @@ func (s *server) GetAllGroups(ctx context.Context, req *v1.GetAllGroupsRequest) 
 		var name string
 		err := rows.Scan(&name)
 		if err != nil {
-			log.Fatalf("Failed to scan user_id: %v", err)
+			log.Fatalf("Failed to scan group names: %v", err)
 		}
 		names = append(names, name)
 	}
@@ -547,6 +547,45 @@ func (s *server) GetAllGroups(ctx context.Context, req *v1.GetAllGroupsRequest) 
 
 	// Create and return the GetAllUserIDsResponse with the retrieved user_ids
 	resp := &v1.GetAllGroupsResponse{
+		Names: names,
+	}
+
+	return resp, nil
+}
+
+func (s *server) GetAllCourses(ctx context.Context, req *v1.GetAllCoursesRequest) (*v1.GetAllCoursesResponse, error) {
+	// Prepare the SQL statement for selecting all user_ids from the users table
+	stmt, err := s.db.Prepare("SELECT name FROM courses")
+	if err != nil {
+		log.Fatalf("Failed to prepare SQL statement: %v", err)
+	}
+	defer stmt.Close()
+
+	// Execute the SQL statement to retrieve all user_ids
+	rows, err := stmt.Query()
+	if err != nil {
+		log.Fatalf("Failed to execute SQL statement: %v", err)
+	}
+	defer rows.Close()
+
+	// Slice to store the retrieved user_ids
+	var names []string
+
+	// Iterate over the result rows and append the user_ids to the slice
+	for rows.Next() {
+		var name string
+		err := rows.Scan(&name)
+		if err != nil {
+			log.Fatalf("Failed to scan course names: %v", err)
+		}
+		names = append(names, name)
+	}
+	if err = rows.Err(); err != nil {
+		log.Fatalf("Error iterating over rows: %v", err)
+	}
+
+	// Create and return the GetAllUserIDsResponse with the retrieved user_ids
+	resp := &v1.GetAllCoursesResponse{
 		Names: names,
 	}
 
